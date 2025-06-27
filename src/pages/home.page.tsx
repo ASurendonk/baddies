@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
 import { useCallback, useEffect, useMemo } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage.ts";
 import Button from "../components/button.tsx";
