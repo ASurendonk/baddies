@@ -1,19 +1,3 @@
-function shuffle(array: string[]) {
-  let currentIndex = array.length;
-
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-
-    // Pick a remaining element...
-    const randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
-  }
-}
-
 const fourPlayerIndexedRounds = [
   { games: [[[0, 3], [1, 2]]], bye: [] },
   { games: [[[0, 2], [1, 3]]], bye: [] },
@@ -205,8 +189,6 @@ type Match = { teamA: [string, string]; teamB: [string, string] };
 type Round = { matches: Match[]; byes: string[] };
 
 function generate(players: string[]): Round[] {
-  shuffle(players);
-
   const indexedRoundsByCount: Record<number, IndexedRound> = {
     4: fourPlayerIndexedRounds,
     5: fivePlayerIndexedRounds,

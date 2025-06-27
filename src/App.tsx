@@ -5,6 +5,7 @@ import { useThemeSelection } from "./context/themeContext.tsx";
 import { useMemo } from "react";
 import HomePage from "./pages/home.page.tsx";
 import Page from "./components/page.tsx";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { theme } = useThemeSelection();
@@ -18,6 +19,7 @@ function App() {
       <Page>
         <HomePage />
       </Page>
+      <ToastContainer position="bottom-right" />
     </ThemeProvider>
   )
 }

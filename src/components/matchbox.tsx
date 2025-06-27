@@ -8,7 +8,7 @@ interface MatchboxProps {
   onClick: () => void,
 }
 
-const Matchbox: React.FC<MatchboxProps> = ({ team, isWinner }: MatchboxProps) => {
+const Matchbox: React.FC<MatchboxProps> = ({ team, isWinner, onClick }: MatchboxProps) => {
   const theme = useTheme();
 
   const textColor = useMemo(() => {
@@ -39,7 +39,7 @@ const Matchbox: React.FC<MatchboxProps> = ({ team, isWinner }: MatchboxProps) =>
       borderRadius={1}
       bgcolor={theme.palette.background.paper}
     >
-      <ButtonBase sx={{ width: "100%", m: 0 }}>
+      <ButtonBase sx={{ width: "100%", m: 0 }} onClick={onClick}>
         <Stack alignItems="start" width="100%" p="10px" position="relative">
           <Typography
             fontWeight={isWinner ? 700 : 400}
