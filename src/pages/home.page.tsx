@@ -123,7 +123,7 @@ const HomePage = () => {
   return (
     <Stack bgcolor={theme.palette.background.default} gap={4} alignItems="center" py="50px">
       {players.length <= 0 && (
-        <NumberedTextarea value={names} onChange={v => setNames(v)} placeholder="Type player names (4 - 12)" />
+        <NumberedTextarea value={names} onChange={v => setNames(v)} placeholder="Type player names (4 - 16)" />
       )}
 
       <Stack gap={1} flexDirection={isMobile ? "column" : "row" as "column" | "row"} alignSelf={isMobile ? "stretch" : ""}>
