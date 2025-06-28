@@ -43,9 +43,17 @@ const HomePage = () => {
   const onGenerateMatches = useCallback(() => {
     const newPlayers = names.split("\n");
     shuffle(newPlayers);
-    setPlayers(newPlayers);
-    const response = generate(newPlayers);
-    setMatches(response);
+    try {
+      const response = generate(newPlayers);
+      setPlayers(newPlayers);
+      setMatches(response);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
+    }
   }, [names, setPlayers, setMatches]);
 
   const onResetClick = useCallback(() => {
@@ -98,19 +106,36 @@ const HomePage = () => {
   }, [matchWinners]);
 
   const getTopPlayers = useCallback(() => {
-    return Object.entries(scores)
-      .sort(([, a], [, b]) => b - a) // Sort descending by score
-      .slice(0, 3); // Top 3 only
+    const sorted = Object.entries(scores)
+      .sort(([, a], [, b]) => b - a);
+
+    const grouped: Record<number, string[]> = {};
+    for (const [player, score] of sorted) {
+      if (!grouped[score]) grouped[score] = [];
+      grouped[score].push(player);
+    }
+
+    const result: { players: string[]; score: number }[] = [];
+    let shownCount = 0;
+
+    for (const score of Object.keys(grouped).map(Number).sort((a, b) => b - a)) {
+      const group = grouped[score];
+      result.push({ players: group, score });
+      shownCount = group.length;
+      if (shownCount >= 3) break;
+    }
+
+    return result;
   }, [scores]);
 
   const winners = useMemo(() => {
-    const winnerNames: string[] = [];
-    getTopPlayers().map(([player]) => (
-      winnerNames.push(player)
+    const winnerNames: string[][] = [];
+    getTopPlayers().map(({ players }) => (
+      winnerNames.push(players)
     ));
-    return `🥇 ${winnerNames[0]}
-🟨🥈 ${winnerNames[1]}
-🟨⬜🥉 ${winnerNames[2]}
+    return `🥇 ${winnerNames[0]?.join(" & ") ?? ""}
+🟨🥈 ${winnerNames[1]?.join(" & ") ?? ""}
+🟨⬜🥉 ${winnerNames[2]?.join(" & ") ?? ""}
 ️️️🟨⬜🟧`;
   }, [getTopPlayers]);
 
@@ -123,7 +148,11 @@ const HomePage = () => {
   return (
     <Stack bgcolor={theme.palette.background.default} gap={4} alignItems="center" py="50px">
       {players.length <= 0 && (
-        <NumberedTextarea value={names} onChange={v => setNames(v)} placeholder="Type player names (4 - 16)" />
+        <NumberedTextarea
+          value={names}
+          onChange={v => setNames(v)} placeholder="Type player names (4 - 16)"
+          onClearClick={() => setNames("")}
+        />
       )}
 
       <Stack gap={1} flexDirection={isMobile ? "column" : "row" as "column" | "row"} alignSelf={isMobile ? "stretch" : ""}>

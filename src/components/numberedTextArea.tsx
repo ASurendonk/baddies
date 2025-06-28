@@ -64,17 +64,19 @@ const NumberedTextarea: FC<NumberedTextareaProps> = ({
             },
           },
         }}
-        InputProps={{
-          endAdornment: onClearClick ? (
-            <IconButton
-              aria-label="clear input"
-              onClick={onClearClick}
-              edge="end"
-              sx={{ alignSelf: 'start', mt: 1 }}
-            >
-              <Clear sx={{ color: theme.palette.common.black }} />
-            </IconButton>
-          ) : undefined,
+        slotProps={{
+          input: {
+            endAdornment: onClearClick ? (
+              <IconButton
+                aria-label="clear input"
+                onClick={onClearClick}
+                edge="end"
+                sx={{ position: "absolute", top: 0, right: 20, mt: 1 }}
+              >
+                <Clear sx={{ color: theme.palette.common.black }} />
+              </IconButton>
+            ) : undefined,
+          },
         }}
         inputProps={{
           wrap: 'off'
@@ -87,12 +89,12 @@ const NumberedTextarea: FC<NumberedTextareaProps> = ({
           top: 9,
           left: 8,
           padding: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(1)}`,
-          color: `${theme.palette.text.secondary}aa`,
+          color: `${theme.palette.text.secondary}`,
           userSelect: 'none',
           fontFamily: 'Roboto, monospace',
           fontSize: '1em',
           lineHeight: '1.4375em',
-          textAlign: 'right',
+          textAlign: 'left',
           position: 'absolute',
         }}
       >
