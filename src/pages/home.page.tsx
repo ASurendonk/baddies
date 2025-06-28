@@ -133,9 +133,9 @@ const HomePage = () => {
     getTopPlayers().map(({ players }) => (
       winnerNames.push(players)
     ));
-    return `🥇 ${winnerNames[0]?.join(" & ") ?? ""}
-🟨🥈 ${winnerNames[1]?.join(" & ") ?? ""}
-🟨⬜🥉 ${winnerNames[2]?.join(" & ") ?? ""}
+    return `🥇 ${winnerNames[0]?.join(", ") ?? ""}
+🟨🥈 ${winnerNames[1]?.join(", ") ?? ""}
+🟨⬜🥉 ${winnerNames[2]?.join(", ") ?? ""}
 ️️️🟨⬜🟧`;
   }, [getTopPlayers]);
 
