@@ -1,4 +1,4 @@
-import { Stack, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { useCallback, useEffect, useMemo } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage.ts";
 import Button from "../components/button.tsx";
@@ -201,9 +201,9 @@ const HomePage = () => {
           );
         })}
       </Stack>
-      <Stack gap={2}>
+      <Stack gap={2} width="100%">
         {Object.keys(matchWinners).length > 0 && (
-          <Stack gap={2}>
+          <Stack gap={2} alignItems="center">
             <Typography variant="h2" textAlign="center">Winners</Typography>
             <Typography sx={{ whiteSpace: "pre-line" }}>{winners}</Typography>
             <Button label="SHARE RESULT" onClick={shareResults} />
