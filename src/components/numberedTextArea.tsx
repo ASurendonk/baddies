@@ -43,8 +43,6 @@ const NumberedTextarea: FC<NumberedTextareaProps> = ({
             paddingLeft: 4.5,
             '& textarea': {
               paddingLeft: theme.spacing(1),
-              fontFamily: 'Roboto, monospace',
-              lineHeight: '1.4375em',
               whiteSpace: 'pre',        // don't wrap
               overflowWrap: 'normal',   // no wrapping
               wordWrap: 'normal',       // no wrapping

@@ -74,6 +74,14 @@ const HomePage = () => {
     const key = getMatchKey(roundIndex, matchIndex);
 
     if (matchWinners[key]) {
+      if (matchWinners[key].name === team) {
+        setMatchWinners(prev => {
+          const newSet = { ...prev };
+          delete newSet[key];
+          return newSet
+        });
+        return;
+      }
       setMatchWinners(prev => {
         const newSet = { ...prev };
         newSet[key] = { name: team, players: teamPlayers };
@@ -143,7 +151,6 @@ const HomePage = () => {
     navigator.clipboard.writeText(winners);
     toast.success("Result copied to clipboard");
   }, [winners]);
-  console.log(getTopPlayers());
 
   return (
     <Stack bgcolor={theme.palette.background.default} gap={4} alignItems="center" py="50px">
