@@ -152,6 +152,35 @@ const HomePage = () => {
     toast.success("Result copied to clipboard");
   }, [winners]);
 
+  const decodeState = useCallback((query: string) => {
+    const params = new URLSearchParams(query);
+    const data = params.get("data");
+    if (!data) return;
+
+    const parsed = JSON.parse(atob(decodeURIComponent(data)));
+    setPlayers(parsed.p);
+    setMatches(parsed.m);
+    setScores(parsed.s);
+    setMatchWinners(parsed.w);
+  }, [setMatchWinners, setMatches, setPlayers, setScores]);
+
+  useEffect(() => {
+    decodeState(window.location.search);
+  }, [decodeState]);
+
+  const shareBrackets = useCallback(() => {
+    const state = {
+      p: players,
+      m: matches,
+      s: scores,
+      w: matchWinners,
+    };
+    const query = `?data=${encodeURIComponent(btoa(JSON.stringify(state)))}`;
+    navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}${query}`);
+    toast.success("Bracket link copied to clipboard");
+  }, [players, matches, scores, matchWinners]);
+
+
   return (
     <Stack bgcolor={theme.palette.background.default} gap={4} alignItems="center" py="50px">
       {players.length <= 0 && (
@@ -164,9 +193,12 @@ const HomePage = () => {
 
       <Stack gap={1} flexDirection={isMobile ? "column" : "row" as "column" | "row"} alignSelf={isMobile ? "stretch" : ""}>
         {players.length > 0 ? (
-          <Button label="RESET MATCH" onClick={onResetClick} />
+          <Stack gap={2} flexDirection="row">
+            <Button label="RESET MATCH" onClick={onResetClick} />
+            <Button label="SHARE BRACKETS" onClick={shareBrackets} />
+          </Stack>
         ) : (
-          <Button label="GENERATE MATCHES" onClick={onGenerateMatches} />
+            <Button label="GENERATE MATCHES" onClick={onGenerateMatches} />
         )}
       </Stack>
 
