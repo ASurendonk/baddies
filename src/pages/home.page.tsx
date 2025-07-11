@@ -194,8 +194,8 @@ const HomePage = () => {
       <Stack gap={1} flexDirection={isMobile ? "column" : "row" as "column" | "row"} alignSelf={isMobile ? "stretch" : ""}>
         {players.length > 0 ? (
           <Stack gap={2} flexDirection="row">
-            <Button label="RESET MATCH" onClick={onResetClick} />
-            <Button label="SHARE BRACKETS" onClick={shareBrackets} />
+            <Button label={isMobile ? "RESET" : "RESET MATCHES"} onClick={onResetClick} />
+            <Button label={isMobile ? "SHARE" : "SHARE BRACKETS"} onClick={shareBrackets} />
           </Stack>
         ) : (
             <Button label="GENERATE MATCHES" onClick={onGenerateMatches} />
@@ -238,7 +238,7 @@ const HomePage = () => {
           <Stack gap={2} alignItems="center">
             <Typography variant="h2" textAlign="center">Winners</Typography>
             <Typography sx={{ whiteSpace: "pre-line" }}>{winners}</Typography>
-            <Button label="SHARE RESULT" onClick={shareResults} />
+            <Button label="COPY RESULTS" sx={{marginTop: 2}} onClick={shareResults} fullwidth={isMobile}/>
           </Stack>
         )}
       </Stack>
