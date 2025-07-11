@@ -21,7 +21,6 @@ const Button = ({ label, selected, onClick }: ButtonProps) => {
           backgroundColor: selected ? theme.palette.primary.dark : theme.palette.primary.light,
           textDecoration: selected ? "underline" : "inherit",
         },
-        whiteSpace: "nowrap",
       }}
       onClick={onClick}
     >
