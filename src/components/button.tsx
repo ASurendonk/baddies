@@ -2,11 +2,13 @@ import { Button as MUIButton, useTheme } from "@mui/material";
 
 interface ButtonProps {
   label: string;
+  fullwidth?: boolean;
   selected?: boolean;
   onClick?(): void;
+  sx?: React.CSSProperties;
 }
 
-const Button = ({ label, selected, onClick }: ButtonProps) => {
+const Button = ({ label, selected, fullwidth, sx, onClick }: ButtonProps) => {
   const theme = useTheme();
 
   return (
@@ -14,6 +16,7 @@ const Button = ({ label, selected, onClick }: ButtonProps) => {
       variant="contained"
       color="primary"
       sx={{
+        width: fullwidth ? "100%" : "auto",
         flex: 1,
         backgroundColor: selected ? theme.palette.primary.dark : theme.palette.primary.main,
         textDecoration: selected ? "underline" : "inherit",
@@ -21,6 +24,8 @@ const Button = ({ label, selected, onClick }: ButtonProps) => {
           backgroundColor: selected ? theme.palette.primary.dark : theme.palette.primary.light,
           textDecoration: selected ? "underline" : "inherit",
         },
+        whiteSpace: "nowrap",
+        ...sx,
       }}
       onClick={onClick}
     >
